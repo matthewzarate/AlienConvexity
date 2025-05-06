@@ -19,12 +19,20 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * maxScreenRow;
 
     Thread gameThread;
+    KeyHandler keyH = new KeyHandler();
+
+    int px = 150;
+    int py = 150;
+    int pSpeed = 3;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         //JPanel uses double buffering function by default
         //Enhances rendering
+        this.addKeyListener(keyH); //so KeyHandle can recognize game input
+        this.setFocusable(true);
          }
 
     public void startGameThread() {
@@ -43,14 +51,17 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     public void update() {
-
+        if (keyH.up) {py = py - pSpeed;}
+        if (keyH.down) {py = py + pSpeed;}
+        if (keyH.left) {px = px - pSpeed;}
+        if (keyH.right) {px = px + pSpeed;}
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         //We change Graphics g to Graphics2D, more methods available to us
         g2d.setColor(Color.white);
-        g2d.fillRect(screenWidth/2, screenHeight/2, tileSize, tileSize);
+        g2d.fillRect(px, py, tileSize, tileSize);
         g2d.dispose(); //Saves memory
     }
 }
