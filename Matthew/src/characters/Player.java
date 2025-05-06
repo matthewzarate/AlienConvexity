@@ -44,6 +44,11 @@ public class Player extends Entity {
         }
     }
     public void update() {
+        if (keyHandler.down || keyHandler.up || keyHandler.left || keyHandler.right) {
+            avatarWalks();
+        }
+    }
+    public void avatarWalks() {
         if (keyHandler.up) {
             direction = "up";
             y = y - speed;
@@ -71,6 +76,7 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
     }
+
 
     public void draw(Graphics g2d) {
         //g2d.setColor(Color.white);
