@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         //JPanel uses double buffering function by default
         //Enhances rendering
-    }
+         }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -33,9 +33,19 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    //Core of game
+    //game loop
     @Override
     public void run() {
+        while(gameThread != null) {
+            System.out.println("Running!");
+            update();
+            repaint(); //repaint() calls paintComponent for us
+        }
+    }
+    public void update() {
 
+    }
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }
