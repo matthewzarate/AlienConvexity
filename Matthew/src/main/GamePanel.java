@@ -1,3 +1,6 @@
+package main;
+import characters.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -12,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     // that were 16x16 size. Therefore, scaling required
     final int scale = 3;
     //actual tileSize to be displayed on game screen
-    final int tileSize = originalTileSize * scale;
+     public final int tileSize = originalTileSize * scale;
     final int maxScreenColumn = 16;
     final int maxScreenRow = 12;
     final int screenWidth = tileSize * maxScreenColumn;
@@ -21,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
+    Player player = new Player(this, keyH); //passing in this GamePanel class & KeyH
 
     int px = 150;
     int py = 150;
@@ -34,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
         //Enhances rendering
         this.addKeyListener(keyH); //so KeyHandle can recognize game input
         this.setFocusable(true);
-         }
+    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -78,17 +82,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     public void update() {
-        if (keyH.up) {py = py - pSpeed;}
-        if (keyH.down) {py = py + pSpeed;}
-        if (keyH.left) {px = px - pSpeed;}
-        if (keyH.right) {px = px + pSpeed;}
+        player.update();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         //We change Graphics g to Graphics2D, more methods available to us
-        g2d.setColor(Color.white);
-        g2d.fillRect(px, py, tileSize, tileSize);
+        player.draw(g2d);
         g2d.dispose(); //Saves memory
     }
 }
