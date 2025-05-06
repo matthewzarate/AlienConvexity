@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity {
 
@@ -59,6 +60,16 @@ public class Player extends Entity {
             direction = "right";
             x = x + speed;
         }
+        spriteCounter++;
+        if (spriteCounter > 12) {
+            if (spriteNumber == 1) {
+                spriteNumber = 2;
+            }
+            else if (spriteNumber == 2) {
+                spriteNumber = 1;
+            }
+            spriteCounter = 0;
+        }
     }
 
     public void draw(Graphics g2d) {
@@ -68,18 +79,39 @@ public class Player extends Entity {
 
         switch(direction) {
             case "up":
-                image = up1;
+                if (spriteNumber == 1) {
+                    image = up1;
+                }
+                if (spriteNumber == 2) {
+                    image = up2;
+                }
                 break;
 
             case "down":
-                image = down1;
+                if (spriteNumber == 1) {
+                    image = down1;
+                }
+                if (spriteNumber == 2) {
+                    image = down2;
+                }
                 break;
+
             case "left":
-                image = left1;
+                if (spriteNumber == 1) {
+                    image = left1;
+                }
+                if (spriteNumber == 2) {
+                    image = left2;
+                }
                 break;
 
             case "right":
-                image = right1;
+                if (spriteNumber == 1) {
+                    image = right1;
+                }
+                if (spriteNumber == 2) {
+                    image = right2;
+                }
                 break;
         }
         g2d.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
