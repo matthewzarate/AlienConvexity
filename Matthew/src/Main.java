@@ -11,6 +11,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Alien World");
+
+
+        //Add GamePanel to our window
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel);
+        window.pack(); //Allows us to see window
+
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
