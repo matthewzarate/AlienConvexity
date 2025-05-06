@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int maxScreenRow = 12;
     final int screenWidth = tileSize * maxScreenColumn;
     final int screenHeight = tileSize * maxScreenRow;
+    int fps = 60;
 
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
@@ -44,10 +45,36 @@ public class GamePanel extends JPanel implements Runnable {
     //game loop
     @Override
     public void run() {
+        double drawInterval = (double) 1000000000 / fps; //16.66M nanosec,
+
+        // We redraw the screen every 0.016sec
+        double nextDrawTime = System.nanoTime() + drawInterval;
+        //curr sys time in nanosec
+        //When internal system time hits nextDrawTime, then draw screen again
         while(gameThread != null) {
             System.out.println("Running!");
             update();
             repaint(); //repaint() calls paintComponent for us
+
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                //subtract curr time from nextDrawTime
+                // to get time left till we get next Draw Time
+                remainingTime = remainingTime / 1000000; //ms units
+
+                //In small case that update() and repaint() takes longer than the calculated drawInterval
+                //Then, no time is left, therefore
+                //Thread doesn't need to 'sleep'
+                if (remainingTime < 0) {
+                    remainingTime = 0;
+                }
+                Thread.sleep((long) remainingTime); //sleep takes in ms units
+                //Thread.sleep() may cause a few ms difference inaccuracy
+                nextDrawTime = nextDrawTime + drawInterval;
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
     public void update() {
