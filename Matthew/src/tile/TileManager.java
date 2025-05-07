@@ -19,7 +19,7 @@ public class TileManager {
         tiles = new Tile[10];
         mapTileNumber = new int[gamePanel.maxScreenColumn][gamePanel.maxScreenRow];
         getTileImg();
-        loadMap();
+        loadMap("/maps/firstMap.txt");
     }
     public void getTileImg() {
         try {
@@ -68,9 +68,9 @@ public class TileManager {
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String filePath) {
         try {
-            InputStream is = getClass().getResourceAsStream("/maps/firstMap.txt");
+            InputStream is = getClass().getResourceAsStream(filePath);
             assert is != null;
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
