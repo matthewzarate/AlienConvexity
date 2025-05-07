@@ -69,7 +69,15 @@ public class TileManager {
             //moves playerWorldX (left and up)
             // add playerScreenX & Y (offset difference & get correct coordinates for screenXY
 
-            g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            //draws tile as long as its within the boundary of the Screen!
+            if (worldX > gamePanel.player.worldX - gamePanel.player.screenX
+                    && worldX < gamePanel.player.worldX + gamePanel.player.screenX
+                    && worldY > gamePanel.player.worldY - gamePanel.player.screenY
+                    && worldY < gamePanel.player.worldY + gamePanel.player.screenY) {
+                g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            }
             worldColumn++;
             if (worldColumn == gamePanel.maxWorldColumn) {
                 worldColumn = 0;
