@@ -29,7 +29,7 @@ public class Player extends Entity {
     public void setDefaultVals() {
         worldX = gamePanel.tileSize * 23; //player's starting point on WorldMap
         worldY = gamePanel.tileSize * 21;
-        speed = 3;
+        speed = 5;
         direction = "up";
     }
 

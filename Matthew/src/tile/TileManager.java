@@ -4,7 +4,6 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,7 +16,7 @@ public class TileManager {
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         tiles = new Tile[10];
-        mapTileNumber = new int[gamePanel.maxScreenColumn][gamePanel.maxScreenRow];
+        mapTileNumber = new int[gamePanel.maxWorldColumn][gamePanel.maxWorldRow];
         getTileImg();
         loadMap("/maps/worldMap.txt");
     }
@@ -55,24 +54,26 @@ public class TileManager {
     public void draw(Graphics2D g2d) {
         //Drawing a tile for testing purposes...
         //Automating tile development process
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldColumn = 0;
+        int worldRow = 0;
 
-        while (col < gamePanel.maxScreenColumn && row < gamePanel.maxScreenRow) {
+        while (worldColumn < gamePanel.maxWorldColumn && worldRow < gamePanel.maxWorldRow) {
 
-            int tileNumber = mapTileNumber[col][row];
+            int tileNumber = mapTileNumber[worldColumn][worldRow];
 
-            g2d.drawImage(tiles[tileNumber].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
-            col++;
-            x = x + gamePanel.tileSize;
+            int worldX = worldColumn * gamePanel.tileSize;
+            int worldY = worldRow * gamePanel.tileSize;
+            int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
+            int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
+            //finding tile's screen position
+            //moves playerWorldX (left and up)
+            // add playerScreenX & Y (offset difference & get correct coordinates for screenXY
 
-            if (col == gamePanel.maxScreenColumn) {
-                col = 0;
-                x = 0;
-                row++;
-                y = y + gamePanel.tileSize;
+            g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+            worldColumn++;
+            if (worldColumn == gamePanel.maxWorldColumn) {
+                worldColumn = 0;
+                worldRow++;
             }
         }
     }
@@ -86,15 +87,15 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while (col < gamePanel.maxScreenColumn && row < gamePanel.maxScreenRow) {
+            while (col < gamePanel.maxWorldColumn && row < gamePanel.maxWorldRow) {
                 String line = br.readLine();
-                 while (col < gamePanel.maxScreenColumn) {
+                 while (col < gamePanel.maxWorldColumn) {
                      String[] numbers = line.split(" ");
                      int num = Integer.parseInt(numbers[col]);
                      mapTileNumber[col][row] = num;
                      col++;
                  }
-                 if (col == gamePanel.maxScreenColumn) {
+                 if (col == gamePanel.maxWorldColumn) {
                      col = 0;
                      row++;
                  }
