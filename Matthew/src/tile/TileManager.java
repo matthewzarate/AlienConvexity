@@ -71,10 +71,10 @@ public class TileManager {
 
 
             //draws tile as long as its within the boundary of the Screen!
-            if (worldX > gamePanel.player.worldX - gamePanel.player.screenX
-                    && worldX < gamePanel.player.worldX + gamePanel.player.screenX
-                    && worldY > gamePanel.player.worldY - gamePanel.player.screenY
-                    && worldY < gamePanel.player.worldY + gamePanel.player.screenY) {
+            if (worldX + gamePanel.tileSize> gamePanel.player.worldX - gamePanel.player.screenX
+                    && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX
+                    && worldY + gamePanel.tileSize> gamePanel.player.worldY - gamePanel.player.screenY
+                    && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
                 g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
 
             }
