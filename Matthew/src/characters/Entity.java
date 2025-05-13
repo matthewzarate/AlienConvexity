@@ -3,6 +3,7 @@ package characters;
 import main.GamePanel;
 import main.KeyHandler;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -13,6 +14,9 @@ public class Entity {
     public String direction;
     public int spriteCounter = 0;
     public int spriteNumber = 1;
+
+    public Rectangle boundaryArea; //Creates invisible rectangle with x,y,width,height
+    public boolean collisionOn = false;
 
     public Entity() {}
 }

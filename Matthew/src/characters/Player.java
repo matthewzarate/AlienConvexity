@@ -19,8 +19,13 @@ public class Player extends Entity {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
-        screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
+        screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize / 2);
+        screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize / 2);
+
+        //making my barriers smaller than my Avatar
+        //Avatar is 48x48
+        //x:8 y:16 so Avatar's head can appear/look over some obstacles
+        boundaryArea = new Rectangle(12, 16, 32, 32); //from Entity
 
         setDefaultVals();
         getPlayerImg();
@@ -29,7 +34,7 @@ public class Player extends Entity {
     public void setDefaultVals() {
         worldX = gamePanel.tileSize * 23; //player's starting point on WorldMap
         worldY = gamePanel.tileSize * 21;
-        speed = 5;
+        speed = 8;
         direction = "up";
     }
 
@@ -43,7 +48,6 @@ public class Player extends Entity {
             left2 = ImageIO.read(getClass().getResource("/sprites/l2.png"));
             right1 = ImageIO.read(getClass().getResource("/sprites/r1.png"));
             right2 = ImageIO.read(getClass().getResource("/sprites/r2.png"));
-
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -55,31 +59,45 @@ public class Player extends Entity {
         }
     }
     public void avatarWalks() {
+        int nextX = worldX;
+        int nextY = worldY;
+
+
         if (keyHandler.up) {
             direction = "up";
-            worldY -= speed;
+            nextY -= speed;
         }
         if (keyHandler.down) {
             direction = "down";
-            worldY += speed;
+            nextY += speed;
         }
         if (keyHandler.left) {
             direction = "left";
-            worldX -= speed;
+            nextX -= speed;
         }
         if (keyHandler.right) {
             direction = "right";
-            worldX += speed;
+            nextX += speed;
         }
-        spriteCounter++;
-        if (spriteCounter > 12) {
-            if (spriteNumber == 1) {
-                spriteNumber = 2;
+        collisionOn = false;
+        gamePanel.collisionVerifier.checkTile(this);
+
+        //if collisionOn is false, avatar can move, the tile isn't a solid
+
+        if (!collisionOn) {
+
+            worldX = nextX;
+            worldY = nextY;
+
+            spriteCounter++;
+            if (spriteCounter > 10) {
+                if (spriteNumber == 1) {
+                    spriteNumber = 2;
+                } else if (spriteNumber == 2) {
+                    spriteNumber = 1;
+                }
+                spriteCounter = 0;
             }
-            else if (spriteNumber == 2) {
-                spriteNumber = 1;
-            }
-            spriteCounter = 0;
         }
     }
 

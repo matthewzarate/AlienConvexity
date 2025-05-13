@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     GamePanel gamePanel; //initializing this w/ new GamePanel() caused StackOverflow
-    Tile[] tiles;
-    int[][] mapTileNumber;
+    public Tile[] tiles;
+    public int[][] mapTileNumber;
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -26,8 +26,10 @@ public class TileManager {
             tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
 
             //for next tiles I'll use
+            //Let walls tile be a solid, collision = true
             tiles[1] = new Tile();
             tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/walls.png"));
+            tiles[1].collide = true;
 
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
@@ -43,10 +45,13 @@ public class TileManager {
 
             tiles[6] = new Tile();
             tiles[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bush.png"));
+            tiles[6].collide = true;
 
             tiles[7] = new Tile();
             tiles[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tiles[7].collide = true;
         }
+
         catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,14 +74,13 @@ public class TileManager {
             //moves playerWorldX (left and up)
             // add playerScreenX & Y (offset difference & get correct coordinates for screenXY
 
-
             //draws tile as long as its within the boundary of the Screen!
+
             if (worldX + gamePanel.tileSize> gamePanel.player.worldX - gamePanel.player.screenX
                     && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX
                     && worldY + gamePanel.tileSize> gamePanel.player.worldY - gamePanel.player.screenY
                     && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
                 g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
-
             }
             worldColumn++;
             if (worldColumn == gamePanel.maxWorldColumn) {
