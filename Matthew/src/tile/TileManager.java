@@ -50,6 +50,11 @@ public class TileManager {
             tiles[7] = new Tile();
             tiles[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
             tiles[7].collide = true;
+
+            tiles[8] = new Tile();
+            tiles[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree2.png"));
+            tiles[8].collide = true;
+
         }
 
         catch (Exception e) {
