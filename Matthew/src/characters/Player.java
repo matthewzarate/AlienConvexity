@@ -26,6 +26,8 @@ public class Player extends Entity {
         //Avatar is 48x48
         //x:8 y:16 so Avatar's head can appear/look over some obstacles
         boundaryArea = new Rectangle(12, 16, 32, 32); //from Entity
+        boundaryAreaDefaultX = boundaryArea.x;
+        boundaryAreaDefaultY = boundaryArea.y;
 
         setDefaultVals();
         getPlayerImg();
@@ -62,43 +64,54 @@ public class Player extends Entity {
         int nextX = worldX;
         int nextY = worldY;
 
-
         if (keyHandler.up) {
             direction = "up";
-            nextY -= speed;
+            // nextY -= speed;
         }
         if (keyHandler.down) {
             direction = "down";
-            nextY += speed;
+            //nextY += speed;
         }
         if (keyHandler.left) {
             direction = "left";
-            nextX -= speed;
+           // nextX -= speed;
         }
         if (keyHandler.right) {
             direction = "right";
-            nextX += speed;
+           // nextX += speed;
         }
         collisionOn = false;
         gamePanel.collisionVerifier.checkTile(this);
 
+        //Check Object collision
+        int objectIndex  = gamePanel.collisionVerifier.checkObject(this, true);
+
         //if collisionOn is false, avatar can move, the tile isn't a solid
 
-        if (!collisionOn) {
 
-            worldX = nextX;
-            worldY = nextY;
-
-            spriteCounter++;
-            if (spriteCounter > 10) {
-                if (spriteNumber == 1) {
-                    spriteNumber = 2;
-                } else if (spriteNumber == 2) {
-                    spriteNumber = 1;
-                }
-                spriteCounter = 0;
+        if (collisionOn == false) {
+            switch(direction) {
+                case "up": worldY -= speed; break;
+                case "down": worldY += speed; break;
+                case "left": worldX -= speed; break;
+                case "right": worldX += speed; break;
             }
         }
+//        if (!collisionOn) {
+//
+ //            worldX = nextX;
+ //           worldY = nextY;
+
+  //          spriteCounter++;
+   //         if (spriteCounter > 10) {
+    //            if (spriteNumber == 1) {
+     //               spriteNumber = 2;
+      //          } else if (spriteNumber == 2) {
+       //             spriteNumber = 1;
+        //        }
+         //       spriteCounter = 0;
+           // }
+        //}
     }
 
 

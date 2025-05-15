@@ -16,6 +16,7 @@ public class Entity {
     public int spriteNumber = 1;
 
     public Rectangle boundaryArea; //Creates invisible rectangle with x,y,width,height
+    public int boundaryAreaDefaultX, boundaryAreaDefaultY;
     public boolean collisionOn = false;
 
     public Entity() {}

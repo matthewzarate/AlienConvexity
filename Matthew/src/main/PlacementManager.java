@@ -29,6 +29,7 @@ public class PlacementManager {
         gamePanel.obj[4] = new ObjectDoor();
         gamePanel.obj[4].worldX = 40 * gamePanel.tileSize;
         gamePanel.obj[4].worldY = 42 * gamePanel.tileSize;
+        gamePanel.obj[4].collision = true;
 
     }
 }

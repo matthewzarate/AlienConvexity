@@ -73,4 +73,54 @@ public class CollisionManager {
                 break;
         }
     }
+    //Checks if Player is hitting an object, if yes, we return the index of the object
+    //in order to process the reaction
+    public int checkObject(Entity entity, boolean player) {
+        int index = 999;
+       // for (int i = 0; i < gamePanel.obj.length; i++) {
+            for (int i = 0; i < 5; i++) {
+            if (gamePanel.obj[i] != null) {
+                //get Entity's boundary Area coordinates
+                entity.boundaryArea.x = entity.worldX + entity.boundaryArea.x;
+                entity.boundaryArea.y = entity.worldY + entity.boundaryArea.y;
+
+                //Get the object's boundary Area coordinates
+                gamePanel.obj[i].boundaryArea.x = gamePanel.obj[i].worldX + gamePanel.obj[i].boundaryArea.x;
+                gamePanel.obj[i].boundaryArea.y = gamePanel.obj[i].worldY + gamePanel.obj[i].boundaryArea.y;
+
+                switch(entity.direction) {
+                    case "up":
+                        entity.boundaryArea.y -= entity.speed;
+                        if (entity.boundaryArea.intersects(gamePanel.obj[i].boundaryArea)) {
+                            System.out.println("Up collision");
+                        }
+                        break;
+                    case "down":
+                        entity.boundaryArea.y += entity.speed;
+                        if (entity.boundaryArea.intersects(gamePanel.obj[i].boundaryArea)) {
+                            System.out.println("Down collision");
+                        }
+                        break;
+                    case "left":
+                        entity.boundaryArea.x -= entity.speed;
+                        if (entity.boundaryArea.intersects(gamePanel.obj[i].boundaryArea)) {
+                            System.out.println("Left collision");
+                        }
+                        break;
+                    case "right":
+                        entity.boundaryArea.x += entity.speed;
+                        if (entity.boundaryArea.intersects(gamePanel.obj[i].boundaryArea)) {
+                            System.out.println("Right collision");
+                        }
+                        break;
+                }
+            }
+            entity.boundaryArea.x = entity.boundaryAreaDefaultX;
+            entity.boundaryArea.y = entity.boundaryAreaDefaultY;
+            gamePanel.obj[i].boundaryArea.x = gamePanel.obj[i].boundaryAreaDefaultX;
+            gamePanel.obj[i].boundaryArea.y = gamePanel.obj[i].boundaryAreaDefaultY;
+
+        }
+        return index;
+    }
 }
