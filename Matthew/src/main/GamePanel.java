@@ -1,5 +1,6 @@
 package main;
 import characters.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -32,9 +33,10 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = new TileManager(this);
     Thread gameThread;
     public CollisionManager collisionVerifier = new CollisionManager(this);
+    public PlacementManager placementManager = new PlacementManager(this);
     KeyHandler keyH = new KeyHandler();
     public Player player = new Player(this, keyH); //passing in this GamePanel class & KeyH
-
+    public SuperObject[] obj = new SuperObject[10]; //Can display up to 10 objects simultaneously
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -44,6 +46,10 @@ public class GamePanel extends JPanel implements Runnable {
         //Enhances rendering
         this.addKeyListener(keyH); //so KeyHandle can recognize game input
         this.setFocusable(true);
+    }
+
+    public void placeThings() {
+        placementManager.placeObjects();
     }
 
     public void startGameThread() {
@@ -94,7 +100,19 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         //We change Graphics g to Graphics2D, more methods available to us
+        //Tile
         tileManager.draw(g2d); //tileManager line before player.draw, we draw tiles before the player!
+
+        //The object
+        //Call draw method from SuperObject class
+        //Which object are wee going to draw? Check
+        for (SuperObject superObject : obj) {
+            if (superObject != null) {
+                superObject.draw(g2d, this);
+            }
+        }
+
+        //the Player
         player.draw(g2d);
         g2d.dispose(); //Saves memory
     }
