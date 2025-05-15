@@ -69,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable {
         //When internal system time hits nextDrawTime, then draw screen again
         while(gameThread != null) {
             System.out.println("Running!");
+            System.out.println("X: " + player.worldX/tileSize);
+            System.out.println("Y: " + player.worldY/tileSize);
             update();
             repaint(); //repaint() calls paintComponent for us
 
