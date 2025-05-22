@@ -117,6 +117,7 @@ public class CollisionManager {
             }
             entity.boundaryArea.x = entity.boundaryAreaDefaultX;
             entity.boundaryArea.y = entity.boundaryAreaDefaultY;
+            assert gamePanel.obj[i] != null;
             gamePanel.obj[i].boundaryArea.x = gamePanel.obj[i].boundaryAreaDefaultX;
             gamePanel.obj[i].boundaryArea.y = gamePanel.obj[i].boundaryAreaDefaultY;
 

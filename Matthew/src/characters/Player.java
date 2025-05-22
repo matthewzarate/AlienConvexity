@@ -66,24 +66,24 @@ public class Player extends Entity {
 
         if (keyHandler.up) {
             direction = "up";
-            // nextY -= speed;
+             nextY -= speed;
         }
         if (keyHandler.down) {
             direction = "down";
-            //nextY += speed;
+            nextY += speed;
         }
         if (keyHandler.left) {
             direction = "left";
-           // nextX -= speed;
+            nextX -= speed;
         }
         if (keyHandler.right) {
             direction = "right";
-           // nextX += speed;
+            nextX += speed;
         }
         collisionOn = false;
         gamePanel.collisionVerifier.checkTile(this);
 
-        //Check Object collision
+        //Next, need to check Object collision
         int objectIndex  = gamePanel.collisionVerifier.checkObject(this, true);
 
         //if collisionOn is false, avatar can move, the tile isn't a solid
@@ -97,21 +97,20 @@ public class Player extends Entity {
                 case "right": worldX += speed; break;
             }
         }
-//        if (!collisionOn) {
-//
- //            worldX = nextX;
- //           worldY = nextY;
+   if (!collisionOn) {
+       worldX = nextX;
+       worldY = nextY;
 
-  //          spriteCounter++;
-   //         if (spriteCounter > 10) {
-    //            if (spriteNumber == 1) {
-     //               spriteNumber = 2;
-      //          } else if (spriteNumber == 2) {
-       //             spriteNumber = 1;
-        //        }
-         //       spriteCounter = 0;
-           // }
-        //}
+            spriteCounter++;
+            if (spriteCounter > 10) {
+                if (spriteNumber == 1) {
+                    spriteNumber = 2;
+                } else if (spriteNumber == 2) {
+                    spriteNumber = 1;
+                }
+                spriteCounter = 0;
+            }
+        }
     }
 
 
